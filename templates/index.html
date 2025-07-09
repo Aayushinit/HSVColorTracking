@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HSV Color Tracking</title>
+    <script>
+        function updateHSV() {
+            const l_h = document.getElementById('l_h').value;
+            const l_s = document.getElementById('l_s').value;
+            const l_v = document.getElementById('l_v').value;
+            const u_h = document.getElementById('u_h').value;
+            const u_s = document.getElementById('u_s').value;
+            const u_v = document.getElementById('u_v').value;
+
+            fetch('/set_hsv', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: `l_h=${l_h}&l_s=${l_s}&l_v=${l_v}&u_h=${u_h}&u_s=${u_s}&u_v=${u_v}`
+            });
+        }
+    </script>
+</head>
+<body>
+    <h1>HSV Color Tracking</h1>
+    <div>
+        <label>Lower Hue: <input type="range" id="l_h" min="0" max="255" value="0" oninput="updateHSV()"></label><br>
+        <label>Lower Saturation: <input type="range" id="l_s" min="0" max="255" value="0" oninput="updateHSV()"></label><br>
+        <label>Lower Value: <input type="range" id="l_v" min="0" max="255" value="0" oninput="updateHSV()"></label><br>
+        <label>Upper Hue: <input type="range" id="u_h" min="0" max="255" value="255" oninput="updateHSV()"></label><br>
+        <label>Upper Saturation: <input type="range" id="u_s" min="0" max="255" value="255" oninput="updateHSV()"></label><br>
+        <label>Upper Value: <input type="range" id="u_v" min="0" max="255" value="255" oninput="updateHSV()"></label><br>
+    </div>
+    <img src="{{ url_for('video_feed') }}" style="width: 100%; height: auto;">
+</body>
+</html>
